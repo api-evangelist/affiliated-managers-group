@@ -1,7 +1,11 @@
 aid: affiliated-managers-group
-url: https://raw.githubusercontent.com/api-evangelist/affiliated-managers-group/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/affiliated-managers-group/refs/heads/main/apis.yml
 modified: '2026-03-23'
 apis: []
 common:
   - type: Website
     url: https://www.affiliated-managers-group.com
+description: >-
+  Affiliated Managers Group is a global asset management company that holds equity
+  stakes in a diverse group of boutique investment management firms.
