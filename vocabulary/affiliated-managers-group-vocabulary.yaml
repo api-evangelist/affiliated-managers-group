@@ -1,0 +1,131 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://raw.githubusercontent.com/api-evangelist/affiliated-managers-group/refs/heads/main/vocabulary/affiliated-managers-group-vocabulary.yaml
+title: Affiliated Managers Group Vocabulary
+description: Controlled vocabulary and taxonomy for Affiliated Managers Group investment platforms and business concepts.
+version: '1.0.0'
+provider: Affiliated Managers Group
+domains:
+  - Asset Management
+  - Investment Management
+  - Wealth Management
+  - Institutional Investing
+
+concepts:
+  - name: Affiliate
+    definition: >-
+      An independent investment management firm in which AMG holds an equity stake.
+      Affiliates maintain investment autonomy while benefiting from AMG's capital,
+      distribution, and operational resources.
+
+  - name: Assets Under Management
+    abbreviation: AUM
+    definition: >-
+      The total market value of investments managed by AMG affiliates on behalf of clients.
+      AMG manages approximately $813 billion in AUM across its affiliate network.
+
+  - name: Separately Managed Account
+    abbreviation: SMA
+    definition: >-
+      An investment portfolio owned directly by an investor and managed by a professional
+      investment manager. SMAs allow customization of investment strategies to individual
+      client needs.
+
+  - name: Alpha
+    definition: >-
+      The excess return of an investment portfolio relative to the return of a benchmark
+      index. AMG partners with "alpha-generating" independent investment managers.
+
+  - name: Boutique Investment Manager
+    definition: >-
+      A smaller, specialized investment management firm focused on specific asset classes
+      or strategies with concentrated expertise. AMG's affiliate model is centered on
+      partnering with boutique managers.
+
+  - name: Alternative Investments
+    definition: >-
+      Investment assets that fall outside traditional equity, fixed income, and cash
+      categories. Includes hedge funds, private equity, real assets, and other strategies.
+
+  - name: Mutual Fund
+    definition: >-
+      An investment vehicle pooling money from multiple investors to purchase a portfolio
+      of securities. AMG offers mutual funds across equity, fixed income, alternative,
+      and sustainability asset classes.
+
+  - name: Institutional Investor
+    definition: >-
+      Organizations that invest on behalf of their members or clients, including pension
+      funds, endowments, foundations, sovereign wealth funds, and insurance companies.
+
+  - name: Financial Advisor
+    definition: >-
+      A licensed professional who provides investment advice and financial planning services
+      to individuals and families. AMG's Wealth Platform serves financial advisors with
+      access to independent manager strategies.
+
+  - name: Distribution Platform
+    definition: >-
+      A system for marketing and delivering investment products to investors through
+      various distribution channels including financial advisors, broker-dealers, and
+      institutional consultants.
+
+  - name: Investment Mandate
+    definition: >-
+      A set of guidelines and objectives given to an investment manager specifying the
+      investment strategy, risk tolerance, and performance targets for a client portfolio.
+
+  - name: ESG Investing
+    definition: >-
+      Investment approach considering Environmental, Social, and Governance factors
+      alongside financial returns. Also referred to as sustainable or responsible investing.
+
+  - name: Private Equity
+    definition: >-
+      Investment in companies not listed on public stock exchanges, typically through
+      buyouts, growth capital, or venture capital strategies.
+
+  - name: RIA
+    label: Registered Investment Advisor
+    definition: >-
+      A firm or individual registered with the SEC or state securities regulators that
+      provides investment advice for compensation. A primary distribution channel for
+      AMG's Wealth Platform.
+
+  - name: Custodian
+    definition: >-
+      A financial institution that holds customer securities for safekeeping. Custodians
+      provide account administration for separately managed accounts and other investments.
+
+  - name: SEC Filing
+    definition: >-
+      Documents required to be filed with the U.S. Securities and Exchange Commission
+      by public companies including 10-K annual reports, 10-Q quarterly reports, and
+      proxy statements.
+
+workflows:
+  - name: Affiliate Partnership
+    description: Independent investment manager becomes an AMG affiliate through capital partnership.
+    steps:
+      - Investment manager approaches AMG or is identified by AMG business development team
+      - Due diligence and valuation process completed
+      - Partnership structure negotiated with equity stake and operational support terms
+      - Capital investment completed and affiliate onboarded to AMG platforms
+      - Affiliate accesses AMG distribution, operational, and strategic resources
+
+  - name: Financial Advisor Onboarding
+    description: Financial advisor gains access to AMG Wealth Platform and affiliate investment strategies.
+    steps:
+      - Financial advisor or firm registers on AMG Wealth Platform
+      - Advisor browses available strategies from 13+ affiliate managers
+      - Client accounts established for selected investment strategies
+      - Ongoing access to performance reporting, insights, and research
+
+personas:
+  - name: Boutique Investment Manager
+    description: Independent firm seeking capital partnership and distribution support while maintaining investment autonomy.
+  - name: Financial Advisor
+    description: Wealth management professional seeking differentiated investment strategies for client portfolios.
+  - name: Institutional Investor
+    description: Pension fund, endowment, or other institution seeking specialized investment mandates from boutique managers.
+  - name: Public Shareholder
+    description: NYSE investor or analyst tracking AMG financial performance and governance.
