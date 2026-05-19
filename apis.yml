@@ -57,6 +57,8 @@ apis:
         url: https://ir.amg.com
 
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/affiliated-managers-group
   - type: Website
     url: https://www.amg.com
   - type: Portal
