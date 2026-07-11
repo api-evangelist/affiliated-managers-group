@@ -58,6 +58,8 @@ apis:
         url: https://ir.amg.com
 
 common:
+  - type: DomainSecurity
+    url: security/affiliated-managers-group-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/affiliated-managers-group
   - type: Website
