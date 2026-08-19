@@ -1,4 +1,5 @@
 aid: affiliated-managers-group
+specificationVersion: '0.23'
 accessModel:
   pricing: unknown
   onboarding: unknown
