@@ -1,0 +1,39 @@
+generated: '2026-08-30'
+method: searched
+source: >-
+  registry searches on 2026-08-30 plus a review of AMG's own sites; no first-party client library exists
+provider: Affiliated Managers Group
+providerId: affiliated-managers-group
+package_count: 0
+packages: []
+notes: >-
+  Affiliated Managers Group publishes no client libraries. There is no first-party SDK, CLI or helper
+  package in any registry, and no GitHub organization to hold one. This is a verified zero, not an
+  unchecked field: the two AMG APIs in this repo are undocumented site-backing endpoints, so a client
+  library would be surprising. No SDKs pointer is emitted in apis.yml.
+registries_searched:
+  - registry: npm
+    query: affiliated-managers-group / amg
+    result: no first-party package
+  - registry: pypi
+    result: no first-party package
+  - registry: rubygems
+    result: no first-party package
+  - registry: packagist
+    result: no first-party package
+  - registry: crates.io
+    result: no first-party package
+  - registry: nuget
+    result: no first-party package
+  - registry: maven-central
+    result: no first-party package
+  - registry: pkg.go.dev
+    result: no first-party package
+github:
+  organization: null
+  evidence:
+    - url: https://api.github.com/orgs/amg
+      status: 404
+    - url: https://api.github.com/search/users?q=affiliated+managers+group
+      status: 200
+      result: total_count 0

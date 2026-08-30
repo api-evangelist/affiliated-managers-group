@@ -1,0 +1,103 @@
+generated: '2026-08-30'
+method: probed
+source: live anonymous GET probes of every host named in apis.yml and in the derived OpenAPI servers[]
+notes: >-
+  Nothing was found. Every /.well-known/ path probed on every AMG host returned a 404 (or, on
+  ir.amg.com, a 403 from the edge). No document was saved, so NO WellKnown and NO SecurityTxt pointer
+  is emitted in apis.yml — this file records a verified absence, not a presence. The two WordPress
+  hosts return honest 404 status codes with their themed 404 page, so this is a real absence rather
+  than a soft-404 catch-all; the control probe below confirms the sites do not answer 200 for
+  arbitrary paths.
+hit_count: 0
+hosts:
+  - host: https://www.amg.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: https://wealth.amg.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: https://ir.amg.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 403
+        file: null
+        note: Edge returned "Access Denied" rather than the application 404.
+      - path: /.well-known/agent-card.json
+        status: 403
+        file: null
+        note: Edge returned "Access Denied" rather than the application 404.
+      - path: /.well-known/agent.json
+        status: 403
+        file: null
+        note: Edge returned "Access Denied" rather than the application 404.
+soft_404_control:
+  - url: https://wealth.amg.com/wp-json/amgfundsdata/v1/nonexistent-route-control-9z
+    status: 404
+    bytes: 114
+    body_excerpt: '{"code":"rest_no_route","message":"No route was found matching the URL and request method."}'
+    verdict: >-
+      The host returns a genuine 404 for an unknown path, so the 404s recorded above are real absences
+      and not a catch-all answering everything.
+subdomains_probed_but_absent:
+  - host: api.amg.com
+    dns: NXDOMAIN
+  - host: developer.amg.com
+    dns: NXDOMAIN
+  - host: docs.amg.com
+    dns: NXDOMAIN
+  - host: data.amg.com
+    dns: NXDOMAIN
+  - host: status.amg.com
+    dns: NXDOMAIN

@@ -1,0 +1,90 @@
+# Affiliated Managers Group (AMG)
+
+> Affiliated Managers Group is a global asset management company that partners with independent
+> investment management firms, called Affiliates. AMG provides capital, distribution and operational
+> support while each Affiliate keeps its investment autonomy. AMG is listed on the NYSE as AMG and
+> operates a Wealth Platform for financial advisors and an Institutional Platform for global
+> institutional investors.
+
+AMG publishes no developer program: there is no developer portal, no API reference, no published
+OpenAPI, no SDK, no CLI, no MCP server and no agent card. What AMG does serve are two undocumented,
+anonymously callable JSON APIs that back its own websites. API Evangelist derived OpenAPI descriptions
+of both from the route tables AMG's own sites publish. Treat them as private plumbing that happens to
+answer: AMG documents no terms for programmatic use, offers no support channel for them, and makes no
+compatibility commitment.
+
+## APIs
+
+- [AMG Funds Data API](https://wealth.amg.com/wp-json/amgfundsdata/v1): 16 routes on wealth.amg.com
+  serving AMG Funds product, performance and portfolio data. Anonymous. Structured JSON from
+  /products/funds, /products-data and /products-table; pre-rendered HTML fragments from the
+  fund-detail, quickview and style-box routes.
+- [AMG Corporate Content API](https://www.amg.com/wp-json/amginc/v1): the AMG Affiliate roster on
+  www.amg.com. A single POST-only route that takes no arguments and returns the list of Affiliate
+  firms with founding year, year joined and page URL.
+
+## Machine-readable descriptions (derived by API Evangelist, not published by AMG)
+
+- [Funds Data OpenAPI](https://raw.githubusercontent.com/api-evangelist/affiliated-managers-group/refs/heads/main/openapi/affiliated-managers-group-funds-data-openapi.yml)
+- [Corporate Content OpenAPI](https://raw.githubusercontent.com/api-evangelist/affiliated-managers-group/refs/heads/main/openapi/affiliated-managers-group-corporate-openapi.yml)
+- [Provider profile (apis.yml)](https://raw.githubusercontent.com/api-evangelist/affiliated-managers-group/refs/heads/main/apis.yml)
+
+## How to call them
+
+- No authentication. No key, token or OAuth. Send no credential headers.
+- Base URLs are the WordPress REST roots: https://wealth.amg.com/wp-json and https://www.amg.com/wp-json.
+- Version is a path segment inside the namespace: amgfundsdata/v1, amginc/v1.
+- Errors are the WordPress REST envelope, not RFC 9457: { "code": "...", "message": "...", "data": { "status": 404 } }.
+- Two routes return a JSON string that must be parsed a second time: /amgfundsdata/v1/products/quickview/{ticker}
+  and /amginc/v1/affiliates.
+- No pagination, no filtering, no field selection. /amgfundsdata/v1/products-data returns roughly 2.4 MB whole.
+- No rate limit is documented and no RateLimit-*, X-RateLimit-* or Retry-After header is returned. Be conservative.
+- Responses are edge-cached by CloudFront and carry x-robots-tag: noindex — AMG does not intend them to be syndicated.
+- Read-only. There is no write, no reversal operation and no idempotency contract, because there is nothing to undo.
+
+## Worked example
+
+Look up an AMG fund by ticker:
+
+1. GET https://wealth.amg.com/wp-json/amgfundsdata/v1/products/funds — find the row whose `ticker` matches;
+   keep its `fund_id` and `wp_product_id`.
+2. GET https://wealth.amg.com/wp-json/amgfundsdata/v1/fund-detail/{ticker}/overview — objective and key facts.
+3. GET https://wealth.amg.com/wp-json/amgfundsdata/v1/fund-detail/{ticker}/performance — trailing and calendar returns.
+4. GET https://wealth.amg.com/wp-json/amgfundsdata/v1/fund-detail/{ticker}/boutique — the managing AMG Affiliate.
+
+Steps 2 to 4 return { "success": true, "data": { "html": "..." } }. The values are inside the HTML fragment.
+For structured numbers instead, read the matching row out of /amgfundsdata/v1/products-data.
+
+## Data model
+
+- Affiliate: an independent investment firm AMG holds a stake in. Keyed by display name and amg.com URL.
+- Fund: keyed by `fund_id`, shared across share classes.
+- ShareClass: keyed by `ticker` and by `wp_product_id`. Carries NAV, trailing performance and Morningstar rating.
+- SmaStrategy: separately managed account strategies, addressed by their own identifier — a fund ticker
+  returns 404 `sma_not_found`.
+- The affiliate roster and the fund data are separate WordPress installs with no shared key. Joining a fund
+  to its boutique across the two APIs requires matching on display name.
+
+## What AMG does not publish
+
+- No developer portal, API reference, getting-started guide or Postman collection.
+- No OpenAPI, AsyncAPI, GraphQL SDL, JSON Schema, WSDL or .proto.
+- No /.well-known/ documents of any kind: security.txt, openid-configuration, oauth-authorization-server,
+  api-catalog, ai-plugin.json, agent-card.json and agent.json all return 404 on every AMG host.
+- No SDK, CLI, MCP server, agent card, changelog, status page, deprecation policy, SLA or rate-limit policy.
+- No published API pricing or plans — AMG's commercial surface is fund management and performance fees
+  disclosed in Affiliate fund prospectuses, not API consumption.
+
+## Company
+
+- [Website](https://www.amg.com/)
+- [About AMG](https://www.amg.com/about-amg/)
+- [Affiliates](https://www.amg.com/partnership-approach/affiliates/)
+- [AMG Wealth Platform](https://wealth.amg.com/)
+- [Institutional Platform](https://www.amg.com/about-amg/global-institutional-platform/)
+- [Investor Relations](https://ir.amg.com/)
+- [Press releases](https://ir.amg.com/news-releases)
+- [Contact](https://www.amg.com/contact-us/)
+- [Cybersecurity and Data Privacy](https://www.amg.com/about-amg/corporate-responsibility/cybersecurity/)
+- [Terms and Conditions](https://www.amg.com/terms-and-conditions/)
+- [Privacy Notices](https://www.amg.com/privacy-notices/)

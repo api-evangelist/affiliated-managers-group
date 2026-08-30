@@ -6,12 +6,25 @@ providerId: affiliated-managers-group
 created: '2026-05-04'
 # Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
 # bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
+method: searched
+modified: '2026-08-30'
 reconciled: false
-notes: Affiliated Managers Group (AMG) is a holding company for autonomous investment-management
-  firms. It does not publish a developer API or per-call pricing; investment-management services
-  are sold by individual Affiliates under fund-specific fee schedules.
+notes: >-
+  Re-checked 2026-08-30. Affiliated Managers Group is a holding company for autonomous
+  investment-management firms. It publishes NO API plans and no API pricing page: plan_count is an
+  honest zero. AMG does serve two undocumented, anonymously callable site-backing JSON APIs (see
+  openapi/), and they are free in the sense that nothing is charged and nothing is sold — there is no
+  commercial offer attached to them at all. The plan entry retained below describes the company's
+  actual commercial surface, fund-level management and performance fees charged by individual
+  Affiliates, not an API product.
+plan_count: 0
+sources_checked:
+  - url: https://www.amg.com/
+    status: 200
+  - url: https://wealth.amg.com/
+    status: 200
+  - url: https://www.amg.com/products/
+    status: 200
 tags:
   - Asset Management
   - Investment Management

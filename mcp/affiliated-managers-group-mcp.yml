@@ -1,0 +1,63 @@
+generated: '2026-08-30'
+method: derived
+source: >-
+  openapi/affiliated-managers-group-funds-data-openapi.yml and
+  openapi/affiliated-managers-group-corporate-openapi.yml — both derived from AMG's own WordPress REST
+  route tables
+provider: Affiliated Managers Group
+providerId: affiliated-managers-group
+status: candidate
+summary: >-
+  Affiliated Managers Group ships no MCP server. No hosted endpoint, no stdio package, no listing in any
+  registry, and nothing in AMG's own site or in search results. The tools below are a CANDIDATE mapping
+  API Evangelist derived from the two site-backing APIs, to show what an AMG MCP server would expose if
+  one existed. Nothing here is published by AMG and no apis.yml MCPServer pointer is emitted for it.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+  note: >-
+    `mode: none` because no server exists. The underlying REST surface is anonymous, so a server built
+    over it would need no credential — which is why `auth: none` rather than `unknown`.
+search_evidence:
+  - probe: web search for an AMG MCP server
+    result: no first-party or third-party MCP server for Affiliated Managers Group
+    checked: '2026-08-30'
+  - probe: https://www.amg.com/.well-known/ai-plugin.json
+    status: 404
+  - probe: https://wealth.amg.com/.well-known/ai-plugin.json
+    status: 404
+candidate_tools:
+  - name: list_amg_funds
+    description: List every AMG fund share class with its ticker, fund id and display name.
+    rest: listFunds
+    api: AMG Funds Data API
+  - name: get_amg_products_dataset
+    description: Fetch the full AMG product dataset — ticker map, asset classes, and every product row with NAV, trailing performance and Morningstar rating.
+    rest: getProductsData
+    api: AMG Funds Data API
+    note: Roughly 2.4 MB per call; a real server would need to filter server-side before returning it to a model.
+  - name: get_amg_fund_overview
+    description: Get the overview panel for one AMG fund by ticker.
+    rest: getFundOverview
+    api: AMG Funds Data API
+    note: Returns pre-rendered HTML, not structured data — a server would have to extract fields before a model could use them.
+  - name: get_amg_fund_performance
+    description: Get the performance panel for one AMG fund by ticker.
+    rest: getFundPerformance
+    api: AMG Funds Data API
+  - name: get_amg_fund_portfolio
+    description: Get the portfolio composition panel for one AMG fund by ticker.
+    rest: getFundPortfolio
+    api: AMG Funds Data API
+  - name: get_amg_fund_boutique
+    description: Get the AMG Affiliate boutique that manages a given fund.
+    rest: getFundBoutique
+    api: AMG Funds Data API
+  - name: list_amg_affiliates
+    description: List the AMG Affiliate roster of independent investment management firms.
+    rest: listAffiliates
+    api: AMG Corporate Content API

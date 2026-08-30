@@ -1,0 +1,65 @@
+generated: '2026-08-30'
+method: probed
+source: >-
+  live anonymous requests against https://wealth.amg.com/wp-json/amgfundsdata/v1/* and
+  https://www.amg.com/wp-json/amginc/v1/affiliates on 2026-08-30, plus the WordPress REST discovery
+  documents at https://wealth.amg.com/wp-json/ and https://www.amg.com/wp-json/
+provider: Affiliated Managers Group
+providerId: affiliated-managers-group
+summary: >-
+  Both AMG site-backing APIs answer anonymously. No API key, bearer token, OAuth flow or signed
+  request is required or accepted for read access, and neither derived OpenAPI declares a
+  securityScheme because the provider's route table declares none. The only credential surface either
+  WordPress host advertises is application passwords for wp-admin, which is a CMS administration
+  mechanism for AMG staff, not a consumer-facing API credential.
+apis:
+  - name: AMG Funds Data API
+    host: wealth.amg.com
+    base: https://wealth.amg.com/wp-json/amgfundsdata/v1
+    authentication:
+      required: false
+      schemes: []
+      evidence:
+        - url: https://wealth.amg.com/wp-json/amgfundsdata/v1/products/funds
+          method: GET
+          headers_sent: none
+          status: 200
+          content_type: application/json
+        - url: https://wealth.amg.com/wp-json/amgfundsdata/v1/fund-detail/BBAIX/overview
+          method: GET
+          headers_sent: none
+          status: 200
+          content_type: application/json
+  - name: AMG Corporate Content API
+    host: www.amg.com
+    base: https://www.amg.com/wp-json/amginc/v1
+    authentication:
+      required: false
+      schemes: []
+      evidence:
+        - url: https://www.amg.com/wp-json/amginc/v1/affiliates
+          method: POST
+          body: '{}'
+          headers_sent: 'Content-Type: application/json'
+          status: 200
+          content_type: application/json
+admin_credential_surface:
+  mechanism: WordPress application passwords
+  scope: site administration only — not a consumer API credential
+  authorization_endpoints:
+    - https://www.amg.com/wp-admin/authorize-application.php
+    - https://wealth.amg.com/wp-admin/authorize-application.php
+  source: the `authentication` block of each host's /wp-json/ discovery document
+oauth:
+  supported: false
+  evidence:
+    - url: https://www.amg.com/.well-known/oauth-authorization-server
+      status: 404
+    - url: https://wealth.amg.com/.well-known/oauth-authorization-server
+      status: 404
+    - url: https://www.amg.com/.well-known/openid-configuration
+      status: 404
+caveats: >-
+  Anonymous read access is what the provider currently serves; it is not a documented guarantee. AMG
+  publishes no developer terms covering programmatic use of these endpoints, so access could change
+  without notice and consumers have no support channel or contractual position.

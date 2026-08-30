@@ -1,0 +1,53 @@
+generated: '2026-08-30'
+method: derived
+source: >-
+  the provider's own WordPress REST route tables at https://wealth.amg.com/wp-json/amgfundsdata/v1 and
+  https://www.amg.com/wp-json/amginc/v1, plus site probes on 2026-08-30
+provider: Affiliated Managers Group
+providerId: affiliated-managers-group
+summary: >-
+  AMG runs no API lifecycle program. The only lifecycle signal that exists is the `v1` segment in each
+  WordPress REST namespace. There is no changelog, no deprecation policy, no Sunset or Deprecation
+  header, no SLA and no status page.
+versioning:
+  scheme: path-segment
+  current_versions:
+    - namespace: amgfundsdata/v1
+      host: wealth.amg.com
+    - namespace: amginc/v1
+      host: www.amg.com
+  policy_url: null
+  policy_published: false
+deprecation:
+  policy_published: false
+  policy_url: null
+  rfc8594_headers:
+    sunset: false
+    deprecation: false
+    note: No Sunset or Deprecation header was returned on any observed response.
+  deprecated_operations: []
+status_page:
+  published: false
+  probed:
+    - url: https://status.amg.com
+      status: null
+      note: DNS NXDOMAIN — the host does not exist.
+sla:
+  published: false
+  note: No availability or support commitment is published for these endpoints.
+changelog:
+  published: false
+  note: >-
+    No API changelog exists. AMG publishes corporate press releases at https://ir.amg.com/news-releases
+    and fund updates at https://wealth.amg.com/fundupdates/, but neither is a record of API change.
+support:
+  channels:
+    - name: Corporate contact form
+      url: https://www.amg.com/contact-us/
+    - name: AMG Wealth contact
+      url: https://wealth.amg.com/contactus/
+  api_specific_support: false
+risk_note: >-
+  An undocumented site-backing API with no version policy, no changelog and no deprecation notice can
+  change or disappear with any CMS deployment. A consumer integrating against it carries the full
+  breakage risk with no notice period.

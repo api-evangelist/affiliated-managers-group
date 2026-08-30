@@ -1,0 +1,70 @@
+generated: '2026-08-30'
+method: derived
+source: >-
+  openapi/affiliated-managers-group-funds-data-openapi.yml,
+  openapi/affiliated-managers-group-corporate-openapi.yml, and live probes on 2026-08-30
+provider: Affiliated Managers Group
+providerId: affiliated-managers-group
+summary: >-
+  Cross-cutting and domain-standard conformance for AMG's two site-backing APIs. Everything is a
+  negative. These are WordPress REST endpoints serving a marketing site, so they inherit WordPress's
+  conventions and nothing else — no OAuth, no RFC 9457, no pagination contract. The domain-standard
+  finding is the interesting one for an asset manager: the contracts carry no fund-data or financial
+  messaging standard of any kind.
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme in either derived spec; /.well-known/oauth-authorization-server returned 404 on www.amg.com and wealth.amg.com.
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returned 404 on every AMG host.
+  - id: rfc9457
+    conforms: false
+    evidence: Errors are the WordPress envelope { code, message, data.status } served as application/json, never application/problem+json. See errors/affiliated-managers-group-problem-types.yml.
+  - id: rfc9116
+    conforms: false
+    evidence: /.well-known/security.txt returned 404 on www.amg.com, wealth.amg.com and ir.amg.com.
+  - id: rfc8594
+    conforms: false
+    evidence: No Sunset or Deprecation header on any observed response.
+  - id: pagination
+    conforms: false
+    evidence: No page, per_page, cursor or offset parameter on any amgfundsdata or amginc route; collections are served whole.
+  - id: idempotency
+    conforms: na
+    evidence: Read-only surface. No write operation exists to make idempotent.
+  - id: json:api
+    conforms: false
+    evidence: Responses are bespoke objects and arrays, several of them double-encoded JSON strings; no JSON:API document structure or media type.
+  - id: odata
+    conforms: false
+    evidence: No $metadata surface and no OData query options.
+  - id: scim
+    conforms: false
+    evidence: No identity surface of any kind; no urn:ietf:params:scim schema URN appears in either contract.
+domain_standard:
+  sector: asset management / investment management
+  declared: false
+  evidence: >-
+    Neither contract declares a domain standard for its market. The fund and performance payloads are
+    bespoke WordPress field names (fund_id, perf_1yr, rating_overall, nav) with US-format date strings
+    and "-" sentinels. Nothing in either spec carries an ISO 20022 message type, a FIX or FIXML element,
+    an FDX resource, an ISIN/CUSIP/LEI identifier scheme, an Open Funds or FundsXML shape, or an SEC
+    EDGAR/XBRL taxonomy reference. Funds are addressed only by ticker and by an AMG-internal fund_id.
+  consequence: >-
+    A consumer that already speaks a fund-data standard cannot integrate without a bespoke connector,
+    and cannot join AMG fund identifiers to any external security master without mapping tickers by hand.
+  note: >-
+    Reward-only check. AMG is not penalised for this; it is recorded because the absence is the finding
+    for an asset manager of this size.
+compliance_certifications:
+  published: []
+  note: >-
+    AMG describes a formal information security program governed by a senior-management committee
+    reporting to the Board at https://www.amg.com/about-amg/corporate-responsibility/cybersecurity/, but
+    names no certification (no SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP) and publishes no trust
+    center. No Compliance or TrustCenter pointer is emitted, because a narrative page is not a published
+    certification.
+  evidence:
+    - url: https://www.amg.com/about-amg/corporate-responsibility/cybersecurity/
+      status: 200

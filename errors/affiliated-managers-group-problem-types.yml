@@ -1,0 +1,62 @@
+generated: '2026-08-30'
+method: derived
+source: >-
+  openapi/affiliated-managers-group-funds-data-openapi.yml and
+  openapi/affiliated-managers-group-corporate-openapi.yml, plus error responses observed live on
+  2026-08-30
+provider: Affiliated Managers Group
+providerId: affiliated-managers-group
+format: wordpress-rest
+rfc9457: false
+notes: >-
+  Neither AMG API returns application/problem+json. Both use the stock WordPress REST error envelope —
+  a flat object with `code`, `message` and `data.status` — served as application/json. There is no
+  published error reference; every entry below was observed on a live response or is a documented
+  WordPress core code.
+envelope:
+  content_type: application/json
+  shape:
+    code: machine-readable error slug
+    message: human-readable sentence
+    data:
+      status: the HTTP status repeated inside the body
+  example:
+    code: rest_no_route
+    message: No route was found matching the URL and request method.
+    data:
+      status: 404
+problem_types:
+  - code: rest_no_route
+    status: 404
+    title: No matching route
+    detail: No route was found matching the URL and request method.
+    remediation: >-
+      Check the path against the provider's own route table at
+      https://wealth.amg.com/wp-json/amgfundsdata/v1 or https://www.amg.com/wp-json/amginc/v1, and check
+      the HTTP method — /amginc/v1/affiliates is POST-only and returns this error for GET.
+    evidence:
+      url: https://wealth.amg.com/wp-json/amgfundsdata/v1/nonexistent-route-control-9z
+      observed_status: 404
+    method: probed
+  - code: sma_not_found
+    status: 404
+    title: SMA page not found
+    detail: The identifier supplied to the SMA performance route does not resolve to a separately managed account strategy page.
+    remediation: >-
+      SMA identifiers are not fund tickers. Use an identifier from the SMA strategy pages under
+      https://wealth.amg.com/separately-managed-accounts/ rather than a mutual fund ticker.
+    evidence:
+      url: https://wealth.amg.com/wp-json/amgfundsdata/v1/sma-detail/BBAIX/performance
+      observed_status: 404
+    method: probed
+  - code: rest_forbidden
+    status: 401
+    title: Not authorized
+    detail: WordPress core error returned when a route requires a capability the caller does not have.
+    remediation: Not applicable to the public read routes documented here; recorded for completeness of the envelope.
+    method: derived
+    note: Not observed on any AMG public route — listed because it is the sibling code in the same envelope.
+gaps:
+  - No published error reference of any kind.
+  - No error codes carry a documentation URL, a request id, or a retry hint.
+  - Errors are not RFC 9457, so agents cannot rely on a `type` URI to disambiguate.

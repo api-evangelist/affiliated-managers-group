@@ -25,7 +25,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/affiliated-managers-group.png
 url: https://raw.githubusercontent.com/api-evangelist/affiliated-managers-group/refs/heads/main/apis.yml
-modified: '2026-04-19'
+created: '2026-04-19'
+modified: '2026-08-30'
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
 name: Affiliated Managers Group
 description: >-
   Affiliated Managers Group (AMG) is a global asset management company that partners
@@ -89,9 +95,91 @@ apis:
       - type: Portal
         url: https://ir.amg.com
 
+  - aid: affiliated-managers-group-funds-data
+    name: AMG Funds Data API
+    description: >-
+      Undocumented, anonymously callable JSON API on wealth.amg.com that backs the AMG Wealth Platform
+      product pages. Exposed as the AMG-authored WordPress REST namespace amgfundsdata/v1, whose route
+      table the site itself publishes. Sixteen routes serve AMG Funds product, performance and portfolio
+      data: /products/funds, /products-data and /products-table return structured fund rows with ticker,
+      fund id, asset class, NAV, trailing performance and Morningstar rating, while the fund-detail,
+      quickview, spotlight and style-box routes return pre-rendered HTML fragments. AMG publishes no
+      developer portal, reference, OpenAPI or terms for programmatic use; the OpenAPI referenced here was
+      derived by API Evangelist from the provider's own route table plus live responses observed
+      2026-08-30.
+    humanURL: https://wealth.amg.com/products/
+    baseURL: https://wealth.amg.com/wp-json/amgfundsdata/v1
+    tags:
+      - Mutual Funds
+      - Fund Performance
+      - Asset Management
+      - Wealth Management
+      - Market Data
+    properties:
+      - type: OpenAPI
+        url: openapi/affiliated-managers-group-funds-data-openapi.yml
+      - type: Portal
+        url: https://wealth.amg.com
+      - type: Support
+        url: https://wealth.amg.com/contactus/
+
+  - aid: affiliated-managers-group-corporate-content
+    name: AMG Corporate Content API
+    description: >-
+      Undocumented, anonymously callable JSON API on www.amg.com that backs the AMG Affiliate directory.
+      Exposed as the AMG-authored WordPress REST namespace amginc/v1. A single POST-only route,
+      /amginc/v1/affiliates, takes no arguments and returns the full roster of independent investment
+      management firms AMG holds a stake in, each with its logo, founding year, the year it became an AMG
+      Affiliate, and its page on amg.com. AMG publishes no developer program covering it; the OpenAPI
+      referenced here was derived by API Evangelist from the provider's own route table plus a live
+      response observed 2026-08-30.
+    humanURL: https://www.amg.com/partnership-approach/affiliates/
+    baseURL: https://www.amg.com/wp-json/amginc/v1
+    tags:
+      - Investment Management
+      - Affiliates
+      - Corporate Data
+      - Asset Management
+      - Directory
+    properties:
+      - type: OpenAPI
+        url: openapi/affiliated-managers-group-corporate-openapi.yml
+      - type: Website
+        url: https://www.amg.com
+      - type: Support
+        url: https://www.amg.com/contact-us/
+
 common:
   - type: DomainSecurity
     url: security/affiliated-managers-group-domain-security.yml
+  - type: Conformance
+    url: conformance/affiliated-managers-group-conformance.yml
+  - type: Authentication
+    url: authentication/affiliated-managers-group-authentication.yml
+  - type: Conventions
+    url: conventions/affiliated-managers-group-conventions.yml
+  - type: ErrorCatalog
+    url: errors/affiliated-managers-group-problem-types.yml
+  - type: DataModel
+    url: data-model/affiliated-managers-group-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/affiliated-managers-group-lifecycle.yml
+  - type: LLMsTxt
+    url: llms/affiliated-managers-group-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Packages
+    url: packages/affiliated-managers-group-packages.yml
+  - type: Vocabulary
+    url: vocabulary/affiliated-managers-group-vocabulary.yaml
+  - type: Plans
+    url: plans/affiliated-managers-group-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/affiliated-managers-group-rate-limits.yml
+  - type: FinOps
+    url: finops/affiliated-managers-group-finops.yml
+  - type: Support
+    url: https://www.amg.com/contact-us/
   - type: LinkedIn
     url: https://www.linkedin.com/company/affiliated-managers-group
   - type: Website
@@ -101,9 +189,9 @@ common:
   - type: Login
     url: https://wealth.amg.com
   - type: PrivacyPolicy
-    url: https://www.amg.com/privacy-policy
+    url: https://www.amg.com/privacy-notices/
   - type: TermsOfService
-    url: https://www.amg.com/terms-of-use
+    url: https://www.amg.com/terms-and-conditions/
   - type: Features
     data:
       - name: Affiliate Partnership Model
@@ -144,3 +232,9 @@ common:
         description: Integration with broker-dealer and RIA custodial platforms for seamless separately managed account delivery.
       - name: Institutional Consultant Networks
         description: Relationships with institutional investment consultants facilitating mandate sourcing for affiliate managers.
+
+x-enrichment:
+  date: '2026-08-30'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1

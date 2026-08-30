@@ -1,0 +1,132 @@
+openapi: 3.1.0
+info:
+  title: AMG Corporate Content API
+  version: v1
+  summary: Undocumented first-party JSON API on www.amg.com serving the AMG Affiliate roster.
+  description: >-
+    The AMG Corporate Content API is the JSON surface that backs the affiliate directory on
+    https://www.amg.com. It is exposed by an AMG-authored WordPress REST namespace, `amginc/v1`, whose
+    route table is published by the site's own machine-readable discovery documents at
+    https://www.amg.com/wp-json/ and https://www.amg.com/wp-json/amginc/v1.
+
+    IMPORTANT PROVENANCE NOTE. Affiliated Managers Group does NOT publish this as a developer program:
+    there is no developer portal, no API reference, no published OpenAPI, no key issuance and no terms
+    covering programmatic use. This document was DERIVED by API Evangelist from the provider's own route
+    table plus a live anonymous response observed on 2026-08-30. Paths, methods and the response shape
+    are taken from what the provider serves; nothing was invented.
+
+    The single content route is declared POST-only by the provider's route table and returns the full
+    AMG Affiliate roster — each independent investment firm AMG holds a stake in, with its logo, founding
+    year, year it joined AMG, and its page on amg.com. It accepts an empty JSON body.
+  contact:
+    name: Affiliated Managers Group
+    url: https://www.amg.com/contact-us/
+  termsOfService: https://www.amg.com/terms-and-conditions/
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://www.amg.com/wp-json/amginc/v1
+  x-derived-on: '2026-08-30'
+  x-publication-status: undocumented-site-backing-api
+servers:
+  - url: https://www.amg.com/wp-json
+    description: AMG corporate site WordPress REST root
+tags:
+  - name: Affiliates
+    description: The AMG Affiliate roster of independent investment management firms.
+paths:
+  /amginc/v1:
+    get:
+      operationId: getCorporateNamespace
+      summary: Get the amginc/v1 namespace index
+      description: Returns the WordPress REST namespace index listing every route and method in the amginc/v1 namespace.
+      tags: [Affiliates]
+      parameters:
+        - name: context
+          in: query
+          required: false
+          description: WordPress REST response context.
+          schema:
+            type: string
+            default: view
+      responses:
+        '200':
+          description: Namespace route table.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  namespace:
+                    type: string
+                  routes:
+                    type: object
+  /amginc/v1/affiliates:
+    post:
+      operationId: listAffiliates
+      summary: List AMG Affiliates
+      description: >-
+        Returns the AMG Affiliate roster. Declared POST-only by the provider's route table and observed
+        returning the full roster for an empty JSON body. The response is a JSON string containing a
+        JSON-encoded array, so consumers must parse twice.
+      tags: [Affiliates]
+      requestBody:
+        required: false
+        description: No arguments are declared by the provider's route table; an empty object was observed to work.
+        content:
+          application/json:
+            schema:
+              type: object
+            example: {}
+      responses:
+        '200':
+          description: JSON-encoded array of affiliates, returned as a JSON string.
+          content:
+            application/json:
+              schema:
+                type: string
+                description: A JSON string that decodes to an array of Affiliate objects.
+              example: '[{"name":"Abacus Capital Group","logo":"https://media.amg.com/wp-content/uploads/2022/04/12021002/abacus.png","amg_affiliates_founded":"2004","amg_affiliate_since":"2021","url":"https://www.amg.com/affiliate/abacus/"}]'
+        '404':
+          description: No route matched.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: rest_no_route
+                message: No route was found matching the URL and request method.
+                data:
+                  status: 404
+components:
+  schemas:
+    Affiliate:
+      type: object
+      description: An independent investment management firm in which AMG holds an equity stake.
+      properties:
+        name:
+          type: string
+        logo:
+          type: string
+          format: uri
+        amg_affiliates_founded:
+          type: string
+          description: Year the affiliate firm was founded.
+        amg_affiliate_since:
+          type: string
+          description: Year the firm became an AMG Affiliate.
+        url:
+          type: string
+          format: uri
+          description: The affiliate's page on amg.com.
+    Error:
+      type: object
+      description: The WordPress REST error envelope returned by this API. Not RFC 9457.
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: integer

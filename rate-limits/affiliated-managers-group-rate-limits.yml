@@ -4,25 +4,54 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Affiliated Managers Group
 providerId: affiliated-managers-group
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
+generated: '2026-08-30'
+method: probed
+modified: '2026-08-30'
 reconciled: false
-notes: AMG does not operate a public developer API.
+source: >-
+  live response headers observed on https://wealth.amg.com/wp-json/amgfundsdata/v1/products/funds and
+  https://www.amg.com/wp-json/amginc/v1/affiliates, 2026-08-30
+notes: >-
+  Supersedes the 2026-05-04 bulk-sweep entry, which recorded "AMG does not operate a public developer
+  API". That is no longer accurate: AMG serves two undocumented, anonymously callable site-backing JSON
+  APIs (see openapi/). What remains true is that AMG documents no rate limit for them and returns no
+  rate-limit signal at runtime. limit_count is an honest zero — checked, nothing published.
+description: >-
+  AMG publishes no rate-limit policy for either site-backing API, and no rate-limit response header was
+  observed. An automated consumer has no runtime signal to back off on and must self-throttle.
 tags:
   - Rate Limiting
   - Financial Services
   - Asset Management
-description: AMG does not publish a developer API; no rate limits to document.
 sources:
-  - https://www.amg.com/
+  - https://wealth.amg.com/wp-json/amgfundsdata/v1
+  - https://www.amg.com/wp-json/amginc/v1
+limit_count: 0
+limits: []
+response_headers:
+  observed: []
+  absent:
+    - RateLimit-Limit
+    - RateLimit-Remaining
+    - RateLimit-Reset
+    - X-RateLimit-Limit
+    - X-RateLimit-Remaining
+    - X-RateLimit-Reset
+    - Retry-After
+status_on_exhaustion: null
 responseCodes: {}
-limits:
-  - name: Not applicable
-    scope: account
-    metric: varies
-    limit: no public API
+evidence:
+  - url: https://wealth.amg.com/wp-json/amgfundsdata/v1/products/funds
+    status: 200
+    rate_limit_headers: none
+    note: Response carried CloudFront cache headers (x-cache, age) and HSTS, but no rate-limit family header.
+  - url: https://www.amg.com/wp-json/amginc/v1/affiliates
+    status: 200
+    rate_limit_headers: none
 policies:
-  - name: No public API
-    description: Affiliated Managers Group does not expose a public developer API surface.
+  - name: No published rate-limit policy
+    description: >-
+      Neither AMG site publishes limits, quotas or a fair-use statement for its JSON endpoints, and no
+      developer terms cover programmatic use. Consumers should throttle conservatively and cache; the
+      full products dataset is roughly 2.4 MB per call and is edge-cached, so repeated polling is both
+      expensive and pointless.

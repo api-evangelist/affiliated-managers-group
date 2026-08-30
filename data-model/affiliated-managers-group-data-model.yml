@@ -1,0 +1,120 @@
+generated: '2026-08-30'
+method: derived
+source: >-
+  openapi/affiliated-managers-group-funds-data-openapi.yml,
+  openapi/affiliated-managers-group-corporate-openapi.yml, and live payloads observed on 2026-08-30
+provider: Affiliated Managers Group
+providerId: affiliated-managers-group
+summary: >-
+  The entity graph behind AMG's two site-backing APIs. It is small and content-shaped: an Affiliate
+  (the boutique investment firm) manages a Fund, a Fund is sold in one or more share classes each with
+  its own Ticker, and Morningstar ratings and style-box data hang off the ticker. There is no customer,
+  account, order or transaction entity anywhere in the public surface — these APIs describe products,
+  not holdings.
+entities:
+  - name: Affiliate
+    description: An independent investment management firm in which AMG holds an equity stake. AMG's marketing calls these boutiques.
+    source: POST /amginc/v1/affiliates
+    identifiers:
+      - field: name
+        note: No stable machine identifier is exposed; the affiliate is keyed by display name and by its amg.com page URL.
+      - field: url
+        note: Canonical page, e.g. https://www.amg.com/affiliate/abacus/
+    fields:
+      - name
+      - logo
+      - amg_affiliates_founded
+      - amg_affiliate_since
+      - url
+  - name: Fund
+    description: An AMG-branded mutual fund, identified by an AMG internal fund_id shared across its share classes.
+    source: GET /amgfundsdata/v1/products/funds, GET /amgfundsdata/v1/products-data
+    identifiers:
+      - field: fund_id
+        example: '10QH'
+        note: Repeats across every share class of the same fund.
+    fields:
+      - fund_id
+      - b_fund_name
+      - fund_type
+      - fund_sub_type_1
+      - fund_sub_type_2
+      - asset_class
+      - inception_date
+      - manager_id
+      - manager_name
+  - name: ShareClass
+    description: A purchasable share class of a Fund, identified by ticker. This is the row unit of the product finder.
+    source: GET /amgfundsdata/v1/products/funds, GET /amgfundsdata/v1/products-table
+    identifiers:
+      - field: ticker
+        example: BBAIX
+      - field: wp_product_id
+        note: WordPress product id; the key used by the style-box routes.
+    fields:
+      - ticker
+      - share_class
+      - short_share_class
+      - fund_name
+      - nav
+      - month_end_date
+      - perf_1yr
+      - perf_3yr
+      - perf_5yr
+      - perf_10yr
+      - perf_15yr
+      - perf_20yr
+      - inception
+      - rating_overall
+  - name: SmaStrategy
+    description: A separately managed account strategy, addressed by its own identifier rather than a fund ticker.
+    source: GET /amgfundsdata/v1/sma-detail/{ticker}/performance
+    identifiers:
+      - field: ticker
+        note: Not a mutual fund ticker; a fund ticker returns 404 sma_not_found.
+  - name: MorningstarRating
+    description: Morningstar overall rating, analyst/medalist rating and style box, carried on the share class row and served by dedicated panel routes.
+    source: GET /amgfundsdata/v1/products/morningstar-quickview/{ticker}, GET /amgfundsdata/v1/products/msstylebox/{wpid}/{style}/{fundtype}
+    fields:
+      - rating_overall
+      - analyst_rating
+      - analyst_rating_with_date
+      - MS_MedalistRatingDate
+      - style_value
+relationships:
+  - from: Fund
+    to: ShareClass
+    type: has_many
+    via: fund_id
+    evidence: Multiple rows in products/funds share one fund_id with different tickers (e.g. MSSVX, MSSCX, MSSYX under fund_id 8901030).
+  - from: ShareClass
+    to: Fund
+    type: belongs_to
+    via: fund_id
+  - from: Affiliate
+    to: Fund
+    type: has_many
+    via: manager_name / manager_id
+    evidence: Each product row names the managing boutique; the boutique panel route returns the affiliate for a ticker.
+    confidence: medium
+    note: manager_name is a display string, not a foreign key onto the Affiliate `name` returned by /amginc/v1/affiliates, so joining the two APIs requires string matching.
+  - from: ShareClass
+    to: MorningstarRating
+    type: has_one
+    via: ticker
+  - from: ShareClass
+    to: MorningstarRating
+    type: has_one
+    via: wp_product_id
+    note: The style-box routes key on wp_product_id rather than ticker.
+cross_api_join:
+  description: >-
+    The affiliate roster lives on www.amg.com and the fund data lives on wealth.amg.com. They are
+    separate WordPress installs with separate namespaces and no shared identifier — the only bridge is
+    the boutique's display name. This is the single most useful gap to note about AMG's data model.
+  confidence: low
+gaps:
+  - No schema, JSON Schema or field reference is published for any entity.
+  - No stable identifier for an Affiliate.
+  - Performance fields are strings, including the sentinel "-" for not-applicable, rather than nulls or numbers.
+  - Dates are US-format strings (MM/DD/YYYY), not ISO 8601; the sentinel 01/01/1970 appears for absent rating dates.

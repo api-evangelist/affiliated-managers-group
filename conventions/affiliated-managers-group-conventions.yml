@@ -1,0 +1,122 @@
+generated: '2026-08-30'
+method: derived
+source: >-
+  openapi/affiliated-managers-group-funds-data-openapi.yml,
+  openapi/affiliated-managers-group-corporate-openapi.yml, and live response headers and bodies
+  observed on 2026-08-30
+provider: Affiliated Managers Group
+providerId: affiliated-managers-group
+summary: >-
+  Cross-cutting semantics for AMG's two undocumented, site-backing WordPress REST APIs. AMG publishes
+  no API conventions document, so everything here was read off the wire or off the provider's own route
+  table. The dominant fact is that these are read-only content APIs for a marketing site: there is no
+  write surface, no key, no pagination, no idempotency contract and no rate-limit signal.
+auth_style:
+  scheme: none
+  detail: Anonymous. No key, token or signature is accepted or required on any public route.
+  cross_ref: authentication/affiliated-managers-group-authentication.yml
+versioning:
+  style: path
+  detail: The version is a path segment inside the WordPress REST namespace — `amgfundsdata/v1`, `amginc/v1`.
+  current: v1
+  policy_published: false
+  cross_ref: lifecycle/affiliated-managers-group-lifecycle.yml
+idempotency:
+  supported: na
+  detail: >-
+    No idempotency key, header or scope exists. The status is `na` rather than `false`: every public
+    route is a read. The one POST route, /amginc/v1/affiliates, is a read expressed as a POST — it
+    creates nothing, takes no arguments, and returns the affiliate roster — so repeating it has no side
+    effect to guard against.
+  header: null
+  retention: null
+pagination:
+  style: none
+  detail: >-
+    No page, per_page, cursor or offset parameter is declared on any amgfundsdata or amginc route, and
+    no Link rel="next" was returned. Collections are served whole — /amgfundsdata/v1/products-data
+    returned roughly 2.4 MB in a single response.
+  response_fields: []
+  note: >-
+    The host does expose the standard WordPress pagination headers (X-WP-Total, X-WP-TotalPages) via
+    Access-Control-Expose-Headers, but they belong to the core /wp/v2 content routes, not to the AMG
+    namespaces documented here.
+filtering_and_expansion:
+  supported: false
+  detail: >-
+    No sparse-fieldset, expansion or filter parameter. A consumer wanting one fund must either fetch the
+    whole products-data payload or call a per-ticker detail route.
+request_id_tracing:
+  supported: false
+  detail: >-
+    No request id header is returned. The only correlating identifiers on a response are CloudFront's
+    x-amz-cf-id and x-amz-cf-pop, which are CDN artifacts, not an AMG trace id.
+error_envelope:
+  format: wordpress-rest
+  rfc9457: false
+  shape: '{ code, message, data: { status } }'
+  cross_ref: errors/affiliated-managers-group-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: null
+  detail: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header was returned on any observed response, and no
+    limit is documented. Responses are served through CloudFront with cache hits, so any protection in
+    front of the origin is invisible to the caller.
+  cross_ref: rate-limits/affiliated-managers-group-rate-limits.yml
+content_negotiation:
+  request: No Accept negotiation; every route returns application/json; charset=UTF-8.
+  response_shapes:
+    - shape: structured JSON
+      routes:
+        - /amgfundsdata/v1/products/funds
+        - /amgfundsdata/v1/products-data
+        - /amgfundsdata/v1/products-table
+    - shape: '{ success, data: { html } } envelope carrying a pre-rendered HTML fragment'
+      routes:
+        - /amgfundsdata/v1/fund-detail/{ticker}/overview
+        - /amgfundsdata/v1/fund-detail/{ticker}/performance
+        - /amgfundsdata/v1/fund-detail/{ticker}/portfolio
+        - /amgfundsdata/v1/fund-detail/{ticker}/boutique
+        - /amgfundsdata/v1/products/morningstar-quickview/{ticker}
+    - shape: a JSON string that itself decodes to JSON (double-encoded)
+      routes:
+        - /amgfundsdata/v1/products/quickview/{ticker}
+        - /amginc/v1/affiliates
+      note: >-
+        A consumer must JSON-parse the response and then parse the resulting string again. This is the
+        single sharpest edge on these APIs for an automated caller.
+dry_run_mode:
+  supported: na
+  detail: No write surface, so there is nothing to rehearse.
+reversibility:
+  grade: na
+  detail: >-
+    Both APIs are read-only. Every public route is a GET except /amginc/v1/affiliates, which is a POST
+    that takes no arguments and returns the affiliate roster — it performs no write, so there is no
+    action to take back. Reversibility, dry-run and idempotency are all `na` for this provider, and
+    that is a statement about the API's shape, not a gap in its documentation.
+  write_surfaces: []
+  reversal_operations: []
+  windows: []
+caching:
+  cdn: CloudFront
+  observed_headers:
+    - x-cache: Hit from cloudfront
+    - age
+  detail: Responses are edge-cached, so fund data read through these endpoints can be stale relative to the origin by the age value returned.
+security_headers_observed:
+  - strict-transport-security: max-age=31536000
+  - x-content-type-options: nosniff
+  - x-frame-options: SAMEORIGIN
+  - content-security-policy: upgrade-insecure-requests;
+  - x-robots-tag: noindex
+cors:
+  access-control-expose-headers: X-WP-Total, X-WP-TotalPages, Link
+  access-control-allow-headers: Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type
+consumer_warning: >-
+  These endpoints are the private plumbing of AMG's marketing sites, published only in the sense that
+  they answer anonymously. AMG documents no terms for programmatic use, offers no support channel, and
+  makes no compatibility commitment. Fund performance data served here is marketing content, not an
+  authoritative financial data feed, and the x-robots-tag: noindex header signals AMG does not intend
+  these responses to be syndicated.

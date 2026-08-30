@@ -1,0 +1,546 @@
+openapi: 3.1.0
+info:
+  title: AMG Funds Data API
+  version: v1
+  summary: Undocumented first-party JSON API on wealth.amg.com serving AMG Funds product, performance and portfolio data.
+  description: >-
+    The AMG Funds Data API is the JSON surface that backs the AMG Wealth Platform product pages at
+    https://wealth.amg.com. It is exposed by an AMG-authored WordPress REST namespace, `amgfundsdata/v1`,
+    and its route table is published by the site's own machine-readable discovery document at
+    https://wealth.amg.com/wp-json/ (namespaces list) and https://wealth.amg.com/wp-json/amgfundsdata/v1
+    (route + method table).
+
+    IMPORTANT PROVENANCE NOTE. Affiliated Managers Group does NOT publish this as a developer program:
+    there is no developer portal, no API reference, no published OpenAPI, no key issuance, no terms
+    covering programmatic use, and no support channel for it. This document was DERIVED by API
+    Evangelist from the route table the site itself serves, plus live anonymous responses observed on
+    2026-08-30. Every path, method and path parameter below appears verbatim in the provider's own
+    discovery document; nothing was invented. Response schemas are described from observed payloads and
+    are intentionally loose, because the provider publishes no schema.
+
+    The endpoints split into two shapes. `/products-data`, `/products-table` and `/products/funds`
+    return structured fund data (ticker, fund_id, fund/asset class, NAV, trailing performance,
+    Morningstar rating, share class, manager). The `fund-detail/*`, `quickview`, `morningstar-quickview`,
+    `spotlight` and `msstylebox` routes return `{"success":true,"data":{"html":"..."}}` — pre-rendered
+    HTML fragments for the page UI rather than structured data.
+  contact:
+    name: AMG Wealth Platform
+    url: https://wealth.amg.com/contactus/
+  termsOfService: https://wealth.amg.com/terms-of-use/
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://wealth.amg.com/wp-json/amgfundsdata/v1
+  x-derived-on: '2026-08-30'
+  x-publication-status: undocumented-site-backing-api
+servers:
+  - url: https://wealth.amg.com/wp-json
+    description: AMG Wealth Platform WordPress REST root
+tags:
+  - name: Products
+    description: Fund and product listings, tables and cross-reference data.
+  - name: Fund Detail
+    description: Per-ticker fund detail panels rendered as HTML fragments.
+  - name: Separately Managed Accounts
+    description: SMA strategy detail panels.
+paths:
+  /amgfundsdata/v1:
+    get:
+      operationId: getFundsDataNamespace
+      summary: Get the amgfundsdata/v1 namespace index
+      description: Returns the WordPress REST namespace index listing every route, method and argument in the amgfundsdata/v1 namespace.
+      tags: [Products]
+      parameters:
+        - name: context
+          in: query
+          required: false
+          description: WordPress REST response context.
+          schema:
+            type: string
+            default: view
+      responses:
+        '200':
+          description: Namespace route table.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  namespace:
+                    type: string
+                  routes:
+                    type: object
+  /amgfundsdata/v1/products/funds:
+    get:
+      operationId: listFunds
+      summary: List AMG funds
+      description: Returns the flat list of AMG Funds share classes with fund identifier, display name, ticker and the WordPress product id used by the other detail routes.
+      tags: [Products]
+      responses:
+        '200':
+          description: Array of fund share classes.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FundSummary'
+              example:
+                - fund_id: 10QH
+                  fund_name: AMG BBH Asset-Backed Credit Fund (BBAIX)
+                  ticker: BBAIX
+                  wp_product_id: 24266
+  /amgfundsdata/v1/products-data:
+    get:
+      operationId: getProductsData
+      summary: Get the full products dataset
+      description: >-
+        Returns the complete product dataset used to build the product finder — a ticker-to-fund map,
+        the asset class list, the table row data, product lists keyed by fund id and by ticker, and the
+        fund sub-type vocabulary. Observed at roughly 2.4 MB uncompressed.
+      tags: [Products]
+      responses:
+        '200':
+          description: Aggregate product dataset.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  api_ticker_map:
+                    type: object
+                    description: Map of ticker to fund display name.
+                    additionalProperties:
+                      type: string
+                  asset_classes:
+                    type: array
+                    items:
+                      type: string
+                  table_rows_data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductRow'
+                  products_list_data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductRow'
+                  products_list_by_funds:
+                    type: object
+                    description: Product rows keyed by fund_id.
+                  products_ticker_data:
+                    type: object
+                    description: Product rows keyed by ticker.
+                  products:
+                    type: array
+                    items:
+                      type: object
+                  fund_sub_type:
+                    type: array
+                    items:
+                      type: string
+  /amgfundsdata/v1/products-table:
+    get:
+      operationId: getProductsTable
+      summary: Get the rendered products table dataset
+      description: Returns the product finder table payload — the same rows as products-data plus pre-rendered HTML cells for fund name, share class and quick-view controls.
+      tags: [Products]
+      responses:
+        '200':
+          description: Table payload.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductRow'
+  /amgfundsdata/v1/products/quickview/{ticker}:
+    get:
+      operationId: getFundQuickView
+      summary: Get the quick-view panel for a fund
+      description: Returns the pre-rendered HTML quick-view panel for a ticker, as used by the product finder's expand control.
+      tags: [Products]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: HTML fragment returned as a JSON string.
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/products/morningstar-quickview/{ticker}:
+    get:
+      operationId: getMorningstarQuickView
+      summary: Get the Morningstar quick-view modal for a fund
+      description: Returns the pre-rendered Morningstar rating modal for a ticker.
+      tags: [Products]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: Wrapped HTML fragment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/products/morningstarstlyeboxdata/{fundtype}/{wpid}/{style}:
+    get:
+      operationId: getMorningstarStyleBoxData
+      summary: Get Morningstar style box data
+      description: Returns the Morningstar style box payload for a product, keyed by fund type, WordPress product id and style. Route name is spelled `morningstarstlyeboxdata` by the provider.
+      tags: [Products]
+      parameters:
+        - name: fundtype
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: wpid
+          in: path
+          required: true
+          description: WordPress product id, as returned by listFunds.
+          schema:
+            type: string
+        - name: style
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Style box payload.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/products/msstylebox/{wpid}/{style}/{fundtype}:
+    get:
+      operationId: getMorningstarStyleBox
+      summary: Get the Morningstar style box panel
+      description: Returns the rendered Morningstar style box panel for a product.
+      tags: [Products]
+      parameters:
+        - name: wpid
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: style
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fundtype
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Style box panel.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/product/growthdata/{ticker}/{start}/{end}:
+    get:
+      operationId: getFundGrowthData
+      summary: Get growth-of-investment data for a fund
+      description: Returns the growth-of-investment series for a ticker between a start and end boundary, as charted on the fund performance panel.
+      tags: [Fund Detail]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+        - name: start
+          in: path
+          required: true
+          description: Series start boundary.
+          schema:
+            type: string
+        - name: end
+          in: path
+          required: true
+          description: Series end boundary.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Growth series payload.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/spotlight/{ticker}/{tickerslug}/{rand}:
+    get:
+      operationId: getFundSpotlight
+      summary: Get the spotlight panel for a fund
+      description: Returns the spotlight promotional panel for a ticker. The third segment is a cache-busting value supplied by the page.
+      tags: [Products]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+        - name: tickerslug
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: rand
+          in: path
+          required: true
+          description: Cache-busting value.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Spotlight payload.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/overview:
+    get:
+      operationId: getFundOverview
+      summary: Get the fund overview panel
+      description: Returns the fund overview panel for a ticker — objective, share class selector, key facts and manager attribution — as a rendered HTML fragment inside a success envelope.
+      tags: [Fund Detail]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: Overview panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/performance:
+    get:
+      operationId: getFundPerformance
+      summary: Get the fund performance panel
+      description: Returns the performance panel for a ticker — trailing and calendar-year returns and the performance charts — as a rendered HTML fragment inside a success envelope.
+      tags: [Fund Detail]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: Performance panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/portfolio:
+    get:
+      operationId: getFundPortfolio
+      summary: Get the fund portfolio panel
+      description: Returns the portfolio composition panel for a ticker — holdings, sector and allocation breakdowns — as a rendered HTML fragment inside a success envelope.
+      tags: [Fund Detail]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: Portfolio panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/boutique:
+    get:
+      operationId: getFundBoutique
+      summary: Get the boutique manager panel for a fund
+      description: Returns the panel describing the AMG Affiliate boutique that manages the fund.
+      tags: [Fund Detail]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: Boutique panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/modal/{modal_type}:
+    get:
+      operationId: getFundDetailModal
+      summary: Get a fund detail modal
+      description: Returns a named modal fragment for a fund detail page — for example a disclosure or definition modal.
+      tags: [Fund Detail]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+        - name: modal_type
+          in: path
+          required: true
+          description: Modal identifier.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Modal panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/sma-detail/{ticker}/performance:
+    get:
+      operationId: getSmaPerformance
+      summary: Get the SMA strategy performance panel
+      description: Returns the performance panel for a separately managed account strategy. Returns a 404 with code `sma_not_found` when the identifier is not an SMA strategy.
+      tags: [Separately Managed Accounts]
+      parameters:
+        - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: SMA performance panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          description: No SMA page for this identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: sma_not_found
+                message: SMA page not found
+                data:
+                  status: 404
+components:
+  parameters:
+    Ticker:
+      name: ticker
+      in: path
+      required: true
+      description: Fund or share class ticker, e.g. BBAIX.
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9-]+$'
+  responses:
+    NotFound:
+      description: No route or no record matched.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_no_route
+            message: No route was found matching the URL and request method.
+            data:
+              status: 404
+  schemas:
+    FundSummary:
+      type: object
+      description: A single AMG fund share class.
+      properties:
+        fund_id:
+          type: string
+          description: AMG internal fund identifier, shared across share classes of the same fund.
+        fund_name:
+          type: string
+          description: Display name including ticker.
+        ticker:
+          type: string
+        wp_product_id:
+          type: integer
+          description: WordPress product id, used as the wpid path parameter on the style box routes.
+    ProductRow:
+      type: object
+      description: A product finder row. Fields observed on live responses; the provider publishes no schema.
+      properties:
+        ticker:
+          type: string
+        fund_id:
+          type: string
+        wp_product_id:
+          type: integer
+        fund_name:
+          type: string
+        b_fund_name:
+          type: string
+        fund_type:
+          type: string
+        fund_sub_type_1:
+          type: string
+        fund_sub_type_2:
+          type: string
+        asset_class:
+          type: string
+        inception_date:
+          type: string
+        manager_id:
+          type: integer
+        manager_name:
+          type: string
+          description: The AMG Affiliate boutique managing the strategy.
+        month_end_date:
+          type: string
+        nav:
+          type: number
+        perf_1yr:
+          type: string
+        perf_3yr:
+          type: string
+        perf_5yr:
+          type: string
+        perf_10yr:
+          type: string
+        perf_15yr:
+          type: string
+        perf_20yr:
+          type: string
+        inception:
+          type: string
+        rating_overall:
+          type: string
+          description: Morningstar overall rating, or "Not Rated".
+        share_class:
+          type: string
+        share_class_list:
+          type: array
+          items:
+            type: object
+    HtmlEnvelope:
+      type: object
+      description: The success envelope used by the panel routes.
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+          properties:
+            html:
+              type: string
+              description: Pre-rendered HTML fragment.
+    Error:
+      type: object
+      description: The WordPress REST error envelope returned by this API. Not RFC 9457.
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
