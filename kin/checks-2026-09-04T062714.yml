@@ -1,17 +1,17 @@
 ---
 kin_checks:
   slug: affiliated-managers-group
-  schema_version: 0.17.2
-  scored_at: '2026-09-01'
-  run_ts: 2026-09-01T063623
+  schema_version: 0.18.2
+  scored_at: '2026-09-04'
+  run_ts: 2026-09-04T062714
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.17.2.yml; counts below let you verify that.
+    in rubric/scoring-0.18.2.yml; counts below let you verify that.
   counts:
-    total: 130
-    earned: 37
-    partial: 7
-    missed: 62
-    na: 24
+    total: 132
+    earned: 23
+    partial: 22
+    missed: 61
+    na: 26
   checks:
   - id: multiple_apis
     status: missed
@@ -29,8 +29,6 @@ kin_checks:
   - id: openapi_3_0
     status: missed
     detail: 0 of 2 openapi documents pass
-  - id: servers_resolvable
-    status: missed
   - id: components_reuse
     status: missed
     detail: 0 of 2 openapi documents pass
@@ -121,7 +119,7 @@ kin_checks:
     status: missed
   - id: agentic_access
     status: missed
-  - id: reversibility_documented
+  - id: mcp_server
     status: missed
   - id: idempotency
     status: missed
@@ -143,15 +141,69 @@ kin_checks:
     status: missed
   - id: agentic_commerce
     status: missed
-  - id: examples_present
+  - id: contract_present
+    status: partial
+    earned: 5.0
+  - id: openapi_3_1
     status: partial
     earned: 1.25
-  - id: plans_present
+    detail: 2 of 2 openapi documents pass
+  - id: info_complete
     status: partial
-    earned: 2.0
-  - id: mcp_server
+    earned: 1.0
+    detail: 2 of 2 openapi documents pass
+  - id: servers_defined
     status: partial
-    earned: 4.8
+    earned: 0.75
+    detail: 2 of 2 openapi documents pass
+  - id: servers_resolvable
+    status: partial
+    earned: 1.25
+  - id: operations_summary_coverage
+    status: partial
+    earned: 1.5
+    detail: 2 of 2 openapi documents pass
+  - id: operations_description_coverage
+    status: partial
+    earned: 1.5
+    detail: 2 of 2 openapi documents pass
+  - id: operations_tagged
+    status: partial
+    earned: 1.0
+    detail: 2 of 2 openapi documents pass
+  - id: operations_operation_ids
+    status: partial
+    earned: 1.0
+    detail: 2 of 2 openapi documents pass
+  - id: response_coverage
+    status: partial
+    earned: 1.25
+    detail: 2 of 2 openapi documents pass
+  - id: error_responses_documented
+    status: partial
+    earned: 1.0
+    detail: 2 of 2 openapi documents pass
+  - id: examples_present
+    status: partial
+    earned: 0.31
+  - id: oauth_flows_current
+    status: partial
+    earned: 1.0
+    detail: 2 of 2 openapi documents pass
+  - id: credentials_not_in_query
+    status: partial
+    earned: 0.75
+    detail: 2 of 2 openapi documents pass
+  - id: oauth_scopes_enumerated
+    status: partial
+    earned: 1.0
+    detail: 2 of 2 openapi documents pass
+  - id: agent_skill_present
+    status: partial
+    earned: 0.75
+  - id: reversibility_documented
+    status: partial
+    earned: 2.4
     detail: 'grade: documented'
   - id: auth_clarity
     status: partial
@@ -169,3 +221,7 @@ kin_checks:
     status: partial
     earned: 3.5
     detail: 'grade: documented'
+  - id: agent_skills
+    status: partial
+    earned: 1.25
+    detail: 'authorship: derived'
