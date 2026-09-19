@@ -132,6 +132,8 @@ apis:
   humanURL: https://wealth.amg.com/products/
   baseURL: https://wealth.amg.com/wp-json/amgfundsdata/v1
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
