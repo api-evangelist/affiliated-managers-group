@@ -1,0 +1,195 @@
+openapi: 3.2.0
+info:
+  title: AMG Funds Data Fund Detail API
+  version: v1
+  summary: Undocumented first-party JSON API on wealth.amg.com serving AMG Funds product, performance and portfolio data.
+  description: The AMG Funds Data API is the JSON surface that backs the AMG Wealth Platform product pages at https://wealth.amg.com.
+  contact:
+    name: AMG Wealth Platform
+    url: https://wealth.amg.com/contactus/
+  termsOfService: https://wealth.amg.com/terms-of-use/
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://wealth.amg.com/wp-json/amgfundsdata/v1
+  x-derived-on: '2026-08-30'
+  x-publication-status: undocumented-site-backing-api
+servers:
+- url: https://wealth.amg.com/wp-json
+  description: AMG Wealth Platform WordPress REST root
+tags:
+- name: Fund Detail
+  description: Per-ticker fund detail panels rendered as HTML fragments.
+paths:
+  /amgfundsdata/v1/product/growthdata/{ticker}/{start}/{end}:
+    get:
+      operationId: getFundGrowthData
+      summary: Get growth-of-investment data for a fund
+      description: Returns the growth-of-investment series for a ticker between a start and end boundary, as charted on the fund performance panel.
+      tags:
+      - Fund Detail
+      parameters:
+      - $ref: '#/components/parameters/Ticker'
+      - name: start
+        in: path
+        required: true
+        description: Series start boundary.
+        schema:
+          type: string
+      - name: end
+        in: path
+        required: true
+        description: Series end boundary.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Growth series payload.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/overview:
+    get:
+      operationId: getFundOverview
+      summary: Get the fund overview panel
+      description: Returns the fund overview panel for a ticker — objective, share class selector, key facts and manager attribution — as a rendered HTML fragment inside a success envelope.
+      tags:
+      - Fund Detail
+      parameters:
+      - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: Overview panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/performance:
+    get:
+      operationId: getFundPerformance
+      summary: Get the fund performance panel
+      description: Returns the performance panel for a ticker — trailing and calendar-year returns and the performance charts — as a rendered HTML fragment inside a success envelope.
+      tags:
+      - Fund Detail
+      parameters:
+      - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: Performance panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/portfolio:
+    get:
+      operationId: getFundPortfolio
+      summary: Get the fund portfolio panel
+      description: Returns the portfolio composition panel for a ticker — holdings, sector and allocation breakdowns — as a rendered HTML fragment inside a success envelope.
+      tags:
+      - Fund Detail
+      parameters:
+      - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: Portfolio panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/boutique:
+    get:
+      operationId: getFundBoutique
+      summary: Get the boutique manager panel for a fund
+      description: Returns the panel describing the AMG Affiliate boutique that manages the fund.
+      tags:
+      - Fund Detail
+      parameters:
+      - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: Boutique panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /amgfundsdata/v1/fund-detail/{ticker}/modal/{modal_type}:
+    get:
+      operationId: getFundDetailModal
+      summary: Get a fund detail modal
+      description: Returns a named modal fragment for a fund detail page — for example a disclosure or definition modal.
+      tags:
+      - Fund Detail
+      parameters:
+      - $ref: '#/components/parameters/Ticker'
+      - name: modal_type
+        in: path
+        required: true
+        description: Modal identifier.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Modal panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: No route or no record matched.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_no_route
+            message: No route was found matching the URL and request method.
+            data:
+              status: 404
+  schemas:
+    Error:
+      type: object
+      description: The WordPress REST error envelope returned by this API. Not RFC 9457.
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+    HtmlEnvelope:
+      type: object
+      description: The success envelope used by the panel routes.
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+          properties:
+            html:
+              type: string
+              description: Pre-rendered HTML fragment.
+  parameters:
+    Ticker:
+      name: ticker
+      in: path
+      required: true
+      description: Fund or share class ticker, e.g. BBAIX.
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9-]+$

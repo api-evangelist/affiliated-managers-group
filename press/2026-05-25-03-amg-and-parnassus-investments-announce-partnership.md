@@ -1,7 +1,9 @@
 ---
 title: AMG and Parnassus Investments Announce Partnership
 url: https://www.parnassus.com/updates/article/amg_and_parnassus_investments_announce_partnership
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Affiliated Managers Group" press release artificial intelligence'
 position: 3
 source: serpapi-google

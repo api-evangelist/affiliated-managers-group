@@ -1,7 +1,9 @@
 ---
 title: 2023 Annual Report - Investor Relations
 url: https://ir.amg.com/static-files/2dab9faa-964c-4998-bb0b-6ce967ae754a
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Affiliated Managers Group" press release artificial intelligence'
 position: 5
 source: serpapi-google

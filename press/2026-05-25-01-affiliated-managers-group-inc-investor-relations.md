@@ -1,7 +1,9 @@
 ---
 title: AFFILIATED MANAGERS GROUP, INC. - Investor Relations
 url: https://ir.amg.com/static-files/8a2c2594-42c3-4f8f-95dd-222c6272344c
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Affiliated Managers Group" press release artificial intelligence'
 position: 1
 source: serpapi-google

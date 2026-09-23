@@ -1,3 +1,5 @@
+# x-archived-from: affiliated-managers-group-funds-data-openapi.yml
+# x-archived-on: 2026-09-16
 openapi: 3.1.0
 info:
   title: AMG Funds Data API

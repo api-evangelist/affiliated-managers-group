@@ -1,0 +1,28 @@
+{
+  "provider": "affiliated-managers-group",
+  "sources": [
+    "_original/affiliated-managers-group-corporate-openapi.yml",
+    "_original/affiliated-managers-group-funds-data-openapi.yml"
+  ],
+  "outputs": [
+    "affiliated-managers-group-affiliates-api-openapi.yml",
+    "affiliated-managers-group-fund-detail-api-openapi.yml",
+    "affiliated-managers-group-products-api-openapi.yml",
+    "affiliated-managers-group-separately-managed-accounts-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "affiliated-managers-group-corporate-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "affiliated-managers-group-funds-data-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "affiliated-managers-group-affiliates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "affiliated-managers-group-fund-detail-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "affiliated-managers-group-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "affiliated-managers-group-separately-managed-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

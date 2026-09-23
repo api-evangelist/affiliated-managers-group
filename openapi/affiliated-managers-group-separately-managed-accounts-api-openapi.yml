@@ -1,0 +1,84 @@
+openapi: 3.2.0
+info:
+  title: AMG Funds Data Separately Managed Accounts API
+  version: v1
+  summary: Undocumented first-party JSON API on wealth.amg.com serving AMG Funds product, performance and portfolio data.
+  description: The AMG Funds Data API is the JSON surface that backs the AMG Wealth Platform product pages at https://wealth.amg.com.
+  contact:
+    name: AMG Wealth Platform
+    url: https://wealth.amg.com/contactus/
+  termsOfService: https://wealth.amg.com/terms-of-use/
+  x-derived-by: API Evangelist enrichment pipeline
+  x-derived-from: https://wealth.amg.com/wp-json/amgfundsdata/v1
+  x-derived-on: '2026-08-30'
+  x-publication-status: undocumented-site-backing-api
+servers:
+- url: https://wealth.amg.com/wp-json
+  description: AMG Wealth Platform WordPress REST root
+tags:
+- name: Separately Managed Accounts
+  description: SMA strategy detail panels.
+paths:
+  /amgfundsdata/v1/sma-detail/{ticker}/performance:
+    get:
+      operationId: getSmaPerformance
+      summary: Get the SMA strategy performance panel
+      description: Returns the performance panel for a separately managed account strategy. Returns a 404 with code `sma_not_found` when the identifier is not an SMA strategy.
+      tags:
+      - Separately Managed Accounts
+      parameters:
+      - $ref: '#/components/parameters/Ticker'
+      responses:
+        '200':
+          description: SMA performance panel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HtmlEnvelope'
+        '404':
+          description: No SMA page for this identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: sma_not_found
+                message: SMA page not found
+                data:
+                  status: 404
+components:
+  schemas:
+    Error:
+      type: object
+      description: The WordPress REST error envelope returned by this API. Not RFC 9457.
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+    HtmlEnvelope:
+      type: object
+      description: The success envelope used by the panel routes.
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+          properties:
+            html:
+              type: string
+              description: Pre-rendered HTML fragment.
+  parameters:
+    Ticker:
+      name: ticker
+      in: path
+      required: true
+      description: Fund or share class ticker, e.g. BBAIX.
+      schema:
+        type: string
+        pattern: ^[a-zA-Z0-9-]+$

@@ -1,7 +1,9 @@
 ---
 title: AMG 2026 proxy details board, pay and auditors
 url: https://www.stocktitan.net/sec-filings/AMG/def-14a-affiliated-managers-group-inc-definitive-proxy-statement-43ab713fa48d.html
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Affiliated Managers Group" press release artificial intelligence'
 position: 4
 source: serpapi-google
