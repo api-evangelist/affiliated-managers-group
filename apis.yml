@@ -42,7 +42,7 @@ description: Affiliated Managers Group (AMG) is a global asset management compan
 tags:
 - Asset Management
 - Investment Management
-- Financial-Services
+- Financial Services
 - Wealth Management
 - Institutional Investing
 - Fortune 1000
@@ -53,6 +53,7 @@ tags_raw:
 - Wealth Management
 - Institutional Investing
 - Fortune 1000
+- Financial-Services
 apis:
 - aid: affiliated-managers-group:affiliated-managers-group-wealth-platform
   name: AMG Wealth Platform
@@ -73,6 +74,7 @@ apis:
   - type: Portal
     url: https://wealth.amg.com
 - aid: affiliated-managers-group:affiliated-managers-group-investor-relations
+  x-published: false
   name: AMG Investor Relations
   description: >-
     Investor relations platform providing shareholders, analysts, and institutional investors access to
@@ -90,80 +92,36 @@ apis:
     url: https://ir.amg.com
   - type: Portal
     url: https://ir.amg.com
-- aid: affiliated-managers-group:affiliated-managers-group-affiliates-api
-  name: Affiliated Managers Group Affiliates API
-  description: The AMG Affiliate roster of independent investment management firms.
-  humanURL: https://wealth.amg.com/products/
-  baseURL: https://wealth.amg.com/wp-json/amgfundsdata/v1
+- aid: affiliated-managers-group:wealth-amg-com-website-wordpress-rest
+  name: Affiliated Managers Group Website (WordPress REST)
+  description: >-
+    The public WordPress REST API (wp-json) of the Affiliated Managers Group website at wealth.amg.com:
+    the route index of the site's content management system, catalogued as one site surface rather than
+    as separate APIs.
+  baseURL: https://wealth.amg.com/wp-json
   tags:
-  - Affiliates
+  - WordPress
+  x-surface: platform-generated
   properties:
-  - type: OpenAPI
-    url: openapi/affiliated-managers-group-affiliates-api-openapi.yml
-  - type: Portal
-    url: https://wealth.amg.com
-  - type: Support
-    url: https://wealth.amg.com/contactus/
-  - type: Website
-    url: https://www.amg.com
-  - type: Support
-    url: https://www.amg.com/contact-us/
-- aid: affiliated-managers-group:affiliated-managers-group-fund-detail-api
-  name: Affiliated Managers Group Fund Detail API
-  description: Per-ticker fund detail panels rendered as HTML fragments.
-  humanURL: https://wealth.amg.com/products/
-  baseURL: https://wealth.amg.com/wp-json/amgfundsdata/v1
+  - type: Documentation
+    url: https://wealth.amg.com/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
+- aid: affiliated-managers-group:amg-com-website-wordpress-rest
+  name: Affiliated Managers Group Website (WordPress REST)
+  description: >-
+    The public WordPress REST API (wp-json) of the Affiliated Managers Group website at www.amg.com: the
+    route index of the site's content management system, catalogued as one site surface rather than as
+    separate APIs.
+  baseURL: https://www.amg.com/wp-json
   tags:
-  - Fund Detail
+  - WordPress
+  x-surface: platform-generated
+  x-platform: wordpress
+  x-platform-surface: rest
   properties:
-  - type: OpenAPI
-    url: openapi/affiliated-managers-group-fund-detail-api-openapi.yml
-  - type: Portal
-    url: https://wealth.amg.com
-  - type: Support
-    url: https://wealth.amg.com/contactus/
-  - type: Website
-    url: https://www.amg.com
-  - type: Support
-    url: https://www.amg.com/contact-us/
-- aid: affiliated-managers-group:affiliated-managers-group-products-api
-  name: Affiliated Managers Group Products API
-  description: Fund and product listings, tables and cross-reference data.
-  humanURL: https://wealth.amg.com/products/
-  baseURL: https://wealth.amg.com/wp-json/amgfundsdata/v1
-  tags:
-  - Product
-  tags_raw:
-  - Products
-  properties:
-  - type: OpenAPI
-    url: openapi/affiliated-managers-group-products-api-openapi.yml
-  - type: Portal
-    url: https://wealth.amg.com
-  - type: Support
-    url: https://wealth.amg.com/contactus/
-  - type: Website
-    url: https://www.amg.com
-  - type: Support
-    url: https://www.amg.com/contact-us/
-- aid: affiliated-managers-group:affiliated-managers-group-separately-managed-accounts-api
-  name: Affiliated Managers Group Separately Managed Accounts API
-  description: SMA strategy detail panels.
-  humanURL: https://wealth.amg.com/products/
-  baseURL: https://wealth.amg.com/wp-json/amgfundsdata/v1
-  tags:
-  - Separately Managed Accounts
-  properties:
-  - type: OpenAPI
-    url: openapi/affiliated-managers-group-separately-managed-accounts-api-openapi.yml
-  - type: Portal
-    url: https://wealth.amg.com
-  - type: Support
-    url: https://wealth.amg.com/contactus/
-  - type: Website
-    url: https://www.amg.com
-  - type: Support
-    url: https://www.amg.com/contact-us/
+  - type: Documentation
+    url: https://www.amg.com/wp-json
 common:
 - type: DomainSecurity
   url: security/affiliated-managers-group-domain-security.yml
@@ -263,6 +221,8 @@ common:
   - name: Institutional Consultant Networks
     description: Relationships with institutional investment consultants facilitating mandate sourcing
       for affiliate managers.
+- type: Support
+  url: https://wealth.amg.com/contactus/
 x-enrichment:
   date: '2026-08-30'
   status: enriched
