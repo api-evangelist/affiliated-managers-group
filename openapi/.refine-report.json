@@ -15,7 +15,7 @@
     "affiliated-managers-group-corporate-openapi.yml: WordPress site /wp-json spec, not split (roadmap#484)",
     "affiliated-managers-group-funds-data-openapi.yml: WordPress site /wp-json spec, not split (roadmap#484)",
     "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "apis.yml register: written (+1 apis, 4 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": []
 }
