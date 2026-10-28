@@ -64,57 +64,120 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Affiliated Managers Group (AMG) is a global asset management company that partners with outstanding independent investment management firms. With approximately $813 billion in assets under management across roughly 40 affiliate firms and 500+ investment strategies, AMG provides capital, distribution, and operational support while preserving each affiliate's investment autonomy. AMG operates a Wealth Platform for financial advisors and an Institutional Platform for global institutional investors.
+Affiliated Managers Group (AMG) is a global asset management company that partners with outstanding independent investment management firms. With approximately $813 billion in assets under management across roughly 40 affiliate firms and 500+ investment strategies, AMG provides capital, distribution, and operational support while preserving each affiliate's investment autonomy. AMG operates a Wealth Platform for financial advisors and an Institutional Platform for global institutional investors, offering mutual funds, separately managed accounts, and alternative investment strategies.
 
-## APIs
+**Areas:** Asset Management · Investment Management · Financial Services · Wealth Management · Institutional Investing · Fortune 1000
 
-### AMG Wealth Platform
+## Affiliated Managers Group on APIs.io
 
-Digital platform providing financial advisors and their clients access to independent investment managers with differentiated investment solutions. Offers access to mutual funds, separately managed accounts, and alternative strategies across 13+ affiliate managers.
+Everything profiled for Affiliated Managers Group is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/affiliated-managers-group/](https://apis.io/providers/affiliated-managers-group/)** — or go straight to one of the APIs or properties below.
 
-- [Documentation](https://wealth.amg.com)
-- [Portal](https://wealth.amg.com)
+### APIs (4)
 
-### AMG Investor Relations
+- [AMG Wealth Platform](https://apis.io/apis/affiliated-managers-group/affiliated-managers-group-wealth-platform/) — Digital platform providing financial advisors and their clients access to independent investment managers with differentiated investment solutions. Offers…
+- [AMG Investor Relations](https://apis.io/apis/affiliated-managers-group/affiliated-managers-group-investor-relations/) — Investor relations platform providing shareholders, analysts, and institutional investors access to AMG's financial performance data, earnings releases, SEC…
+- [Affiliated Managers Group Website (WordPress REST)](https://apis.io/apis/affiliated-managers-group/wealth-amg-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Affiliated Managers Group website at wealth.amg.com: the route index of the site's content management system,…
+- [Affiliated Managers Group Website (WordPress REST)](https://apis.io/apis/affiliated-managers-group/amg-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Affiliated Managers Group website at www.amg.com: the route index of the site's content management system,…
 
-Investor relations platform providing shareholders, analysts, and institutional investors access to AMG's financial performance data, earnings releases, SEC filings, governance documents, and corporate presentations.
+### Published properties
 
-- [Documentation](https://ir.amg.com)
-- [Portal](https://ir.amg.com)
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Properties
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [affiliated-managers-group-mcp.yml](https://apis.io/servers/affiliated-managers-group/affiliated-managers-group-mcp-yml/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Affiliated Managers Group Vocabulary](https://apis.io/vocabularies/affiliated-managers-group/affiliated-managers-group-vocabulary/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Affiliated Managers Group Authentication](https://apis.io/security/affiliated-managers-group/affiliated-managers-group-authentication/)
+- [Affiliated Managers Group Domain Security](https://apis.io/security/affiliated-managers-group/affiliated-managers-group-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Affiliated Managers Group Plans Pricing](https://apis.io/plans/affiliated-managers-group/affiliated-managers-group-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Affiliated Managers Group Rate Limits](https://apis.io/rate-limits/affiliated-managers-group/affiliated-managers-group-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Affiliated Managers Group Finops](https://apis.io/finops/affiliated-managers-group/affiliated-managers-group-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.amg.com)
-- [Wealth Platform](https://wealth.amg.com)
-- [Privacy Policy](https://www.amg.com/privacy-policy)
-- [Terms of Service](https://www.amg.com/terms-of-use)
+- [Support](https://www.amg.com/contact-us/)
+- [Terms of service](https://www.amg.com/terms-and-conditions/)
+- [Privacy policy](https://www.amg.com/privacy-notices/)
 
-## Features
+## API Evangelist rating
 
-- **Affiliate Partnership Model** — Partners with independent investment managers while preserving their autonomy and investment culture.
-- **Multi-Asset Investment Strategies** — Access to 500+ investment strategies across equity, fixed income, alternative, and sustainability-focused asset classes.
-- **Separately Managed Accounts** — Exclusive access to customized investment strategies through separately managed accounts for wealth clients.
-- **Global Institutional Distribution** — Global distribution platform extending affiliate reach to institutional investors in key markets worldwide.
-- **Financial Advisor Platform** — Wealth platform providing financial advisors curated access to independent manager strategies and client account tools.
-- **Investor Relations Portal** — Comprehensive investor relations platform with financial data, SEC filings, and earnings information for public shareholders.
+**Kin Score 27.4** — thin · rubric 0.24.0 · scored 2026-10-17
 
-## Use Cases
+| Facet | Score |
+|---|---|
+| Discoverability | 60.7 |
+| Contract quality | 1.7 |
+| Contract governance | 13.6 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 37.5 |
+| Access clarity | 55.3 |
 
-- **Independent Manager Capital Partnerships** — Boutique investment firms partner with AMG to receive growth capital while maintaining investment independence.
-- **Financial Advisor Diversification** — Financial advisors use AMG Wealth Platform to access differentiated investment strategies for client portfolios.
-- **Institutional Mandate Sourcing** — Institutional investors access AMG's affiliate network for specialized investment mandates across asset classes.
-- **Alternative Investment Access** — Wealth clients access alternative investment strategies including hedge funds and private markets through AMG affiliates.
-- **ESG and Sustainable Investing** — Investors access sustainability-focused strategies from AMG affiliate managers across multiple asset classes.
-- **Public Shareholder Engagement** — NYSE shareholders and analysts track AMG's financial performance and governance through the investor relations portal.
+**Agent readiness 8.4** — agent-aware
 
-## Integrations
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-- **AMG Affiliate Network** — Network of ~40 independent boutique investment managers including Yacktman, Tweedy Browne, and other established firms.
-- **AMG Pantheon Fund** — Private markets investment vehicle providing access to private equity strategies through an AMG-sponsored fund.
-- **NYSE** — AMG is publicly traded on the New York Stock Exchange under the ticker symbol AMG.
-- **Financial Advisor Platforms** — Integration with broker-dealer and RIA custodial platforms for seamless separately managed account delivery.
-- **Institutional Consultant Networks** — Relationships with institutional investment consultants facilitating mandate sourcing for affiliate managers.
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
 
-## Artifacts
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/affiliated-managers-group/](https://apis.io/providers/affiliated-managers-group/).
 
-- [Vocabulary](vocabulary/affiliated-managers-group-vocabulary.yaml)
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Affiliated Managers Group: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/affiliated-managers-group/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
