@@ -1,0 +1,73 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Affiliated Managers Group
+providerId: affiliated-managers-group
+created: '2026-05-04'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+method: searched
+modified: '2026-08-30'
+reconciled: false
+notes: >-
+  Re-checked 2026-08-30. Affiliated Managers Group is a holding company for autonomous
+  investment-management firms. It publishes NO API plans and no API pricing page: plan_count is an
+  honest zero. AMG does serve two undocumented, anonymously callable site-backing JSON APIs (see
+  openapi/), and they are free in the sense that nothing is charged and nothing is sold — there is no
+  commercial offer attached to them at all. The plan entry retained below describes the company's
+  actual commercial surface, fund-level management and performance fees charged by individual
+  Affiliates, not an API product.
+plan_count: 0
+sources_checked:
+  - url: https://www.amg.com/
+    status: 200
+  - url: https://wealth.amg.com/
+    status: 200
+  - url: https://www.amg.com/products/
+    status: 200
+tags:
+  - Asset Management
+  - Investment Management
+  - Financial Services
+  - Wealth Management
+description: AMG does not expose a developer API or pricing page. Investment-management products
+  are distributed by AMG Affiliates under management fee + performance fee structures disclosed
+  in fund prospectuses.
+sources:
+  - https://www.amg.com/
+plans:
+  - id: affiliated-managers-group-fund
+    name: Affiliate Investment Product
+    type: enterprise
+    description: Investment products are sold by AMG Affiliates; fees are fund-specific (management
+      fee + performance fee) and disclosed in each fund's offering documents.
+    entries:
+      - label: Fund management fee
+        name: fund_fee
+        type: subscription
+        metric: AUM
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: see fund prospectus
+        userMultiplied: false
+    elements:
+      - name: Affiliate-distributed funds
+      - name: Separately managed accounts
+      - name: Institutional and wealth channels
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: Affiliate Investment Product
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - year

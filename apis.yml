@@ -1,0 +1,230 @@
+aid: affiliated-managers-group
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
+specificationVersion: '0.23'
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/affiliated-managers-group.png
+url: https://raw.githubusercontent.com/api-evangelist/affiliated-managers-group/refs/heads/main/apis.yml
+created: '2026-04-19'
+modified: '2026-08-30'
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+name: Affiliated Managers Group
+description: Affiliated Managers Group (AMG) is a global asset management company that partners with outstanding
+  independent investment management firms. With approximately $813 billion in assets under management
+  across roughly 40 affiliate firms and 500+ investment strategies, AMG provides capital, distribution,
+  and operational support while preserving each affiliate's investment autonomy. AMG operates a Wealth
+  Platform for financial advisors and an Institutional Platform for global institutional investors, offering
+  mutual funds, separately managed accounts, and alternative investment strategies.
+tags:
+- Asset Management
+- Investment Management
+- Financial Services
+- Wealth Management
+- Institutional Investing
+- Fortune 1000
+tags_raw:
+- Asset Management
+- Investment Management
+- Financial Services
+- Wealth Management
+- Institutional Investing
+- Fortune 1000
+- Financial-Services
+apis:
+- aid: affiliated-managers-group:affiliated-managers-group-wealth-platform
+  name: AMG Wealth Platform
+  description: >-
+    Digital platform providing financial advisors and their clients access to independent investment managers
+    with differentiated investment solutions. Offers access to mutual funds, separately managed accounts,
+    and alternative strategies across 13+ affiliate managers. Features client account portals, transaction
+    history, educational materials, and market insights from AMG's network of independent investment firms.
+  tags:
+  - Wealth Management
+  - Financial Advisors
+  - Mutual Funds
+  - Separately Managed Accounts
+  - Alternative Investments
+  properties:
+  - type: Documentation
+    url: https://wealth.amg.com
+  - type: Portal
+    url: https://wealth.amg.com
+- aid: affiliated-managers-group:affiliated-managers-group-investor-relations
+  x-published: false
+  name: AMG Investor Relations
+  description: >-
+    Investor relations platform providing shareholders, analysts, and institutional investors access to
+    AMG's financial performance data, earnings releases, SEC filings, governance documents, and corporate
+    presentations. Includes quarterly earnings results, press releases, event calendars, and shareholder
+    resources for NYSE-listed AMG.
+  tags:
+  - Investor Relations
+  - Public Company
+  - Financial Data
+  - SEC Filings
+  - Corporate Governance
+  properties:
+  - type: Documentation
+    url: https://ir.amg.com
+  - type: Portal
+    url: https://ir.amg.com
+- aid: affiliated-managers-group:wealth-amg-com-website-wordpress-rest
+  name: Affiliated Managers Group Website (WordPress REST)
+  description: >-
+    The public WordPress REST API (wp-json) of the Affiliated Managers Group website at wealth.amg.com:
+    the route index of the site's content management system, catalogued as one site surface rather than
+    as separate APIs.
+  baseURL: https://wealth.amg.com/wp-json
+  tags:
+  - WordPress
+  x-surface: platform-generated
+  properties:
+  - type: Documentation
+    url: https://wealth.amg.com/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
+- aid: affiliated-managers-group:amg-com-website-wordpress-rest
+  name: Affiliated Managers Group Website (WordPress REST)
+  description: >-
+    The public WordPress REST API (wp-json) of the Affiliated Managers Group website at www.amg.com: the
+    route index of the site's content management system, catalogued as one site surface rather than as
+    separate APIs.
+  baseURL: https://www.amg.com/wp-json
+  tags:
+  - WordPress
+  x-surface: platform-generated
+  x-platform: wordpress
+  x-platform-surface: rest
+  properties:
+  - type: Documentation
+    url: https://www.amg.com/wp-json
+common:
+- type: DomainSecurity
+  url: security/affiliated-managers-group-domain-security.yml
+- type: Conformance
+  url: conformance/affiliated-managers-group-conformance.yml
+- type: Authentication
+  url: authentication/affiliated-managers-group-authentication.yml
+- type: Conventions
+  url: conventions/affiliated-managers-group-conventions.yml
+- type: ErrorCatalog
+  url: errors/affiliated-managers-group-problem-types.yml
+- type: DataModel
+  url: data-model/affiliated-managers-group-data-model.yml
+- type: Lifecycle
+  url: lifecycle/affiliated-managers-group-lifecycle.yml
+- type: LLMsTxt
+  url: llms/affiliated-managers-group-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/affiliated-managers-group-packages.yml
+- type: Vocabulary
+  url: vocabulary/affiliated-managers-group-vocabulary.yaml
+- type: Plans
+  url: plans/affiliated-managers-group-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/affiliated-managers-group-rate-limits.yml
+- type: FinOps
+  url: finops/affiliated-managers-group-finops.yml
+- type: Support
+  url: https://www.amg.com/contact-us/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/affiliated-managers-group
+- type: Website
+  url: https://www.amg.com
+- type: Portal
+  url: https://wealth.amg.com
+- type: Login
+  url: https://wealth.amg.com
+- type: PrivacyPolicy
+  url: https://www.amg.com/privacy-notices/
+- type: TermsOfService
+  url: https://www.amg.com/terms-and-conditions/
+- type: Features
+  data:
+  - name: Affiliate Partnership Model
+    description: Partners with independent investment managers while preserving their autonomy and investment
+      culture.
+  - name: Multi-Asset Investment Strategies
+    description: Access to 500+ investment strategies across equity, fixed income, alternative, and sustainability-focused
+      asset classes.
+  - name: Separately Managed Accounts
+    description: Exclusive access to customized investment strategies through separately managed accounts
+      for wealth clients.
+  - name: Global Institutional Distribution
+    description: Global distribution platform extending affiliate reach to institutional investors in
+      key markets worldwide.
+  - name: Financial Advisor Platform
+    description: Wealth platform providing financial advisors curated access to independent manager strategies
+      and client account tools.
+  - name: Investor Relations Portal
+    description: Comprehensive investor relations platform with financial data, SEC filings, and earnings
+      information for public shareholders.
+- type: UseCases
+  data:
+  - name: Independent Manager Capital Partnerships
+    description: Boutique investment firms partner with AMG to receive growth capital while maintaining
+      investment independence.
+  - name: Financial Advisor Diversification
+    description: Financial advisors use AMG Wealth Platform to access differentiated investment strategies
+      for client portfolios.
+  - name: Institutional Mandate Sourcing
+    description: Institutional investors access AMG's affiliate network for specialized investment mandates
+      across asset classes.
+  - name: Alternative Investment Access
+    description: Wealth clients access alternative investment strategies including hedge funds and private
+      markets through AMG affiliates.
+  - name: ESG and Sustainable Investing
+    description: Investors access sustainability-focused strategies from AMG affiliate managers across
+      multiple asset classes.
+  - name: Public Shareholder Engagement
+    description: NYSE shareholders and analysts track AMG's financial performance and governance through
+      the investor relations portal.
+- type: Integrations
+  data:
+  - name: AMG Affiliate Network
+    description: Network of ~40 independent boutique investment managers including Yacktman, Tweedy Browne,
+      and other established firms.
+  - name: AMG Pantheon Fund
+    description: Private markets investment vehicle providing access to private equity strategies through
+      an AMG-sponsored fund.
+  - name: NYSE
+    description: AMG is publicly traded on the New York Stock Exchange under the ticker symbol AMG.
+  - name: Financial Advisor Platforms
+    description: Integration with broker-dealer and RIA custodial platforms for seamless separately managed
+      account delivery.
+  - name: Institutional Consultant Networks
+    description: Relationships with institutional investment consultants facilitating mandate sourcing
+      for affiliate managers.
+- type: Support
+  url: https://wealth.amg.com/contactus/
+x-enrichment:
+  date: '2026-08-30'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1
