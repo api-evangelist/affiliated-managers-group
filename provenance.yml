@@ -5,14 +5,29 @@ artifacts:
   authentication/affiliated-managers-group-authentication.yml:
     method: unknown
     evidence: no authorship recorded
+  certification/observations-2026-11-10.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   conformance/affiliated-managers-group-conformance.yml:
     method: derived
     evidence: declared in the artifact
   conventions/affiliated-managers-group-conventions.yml:
     method: derived
     evidence: declared in the artifact
+  data-license/affiliated-managers-group-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/affiliated-managers-group-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/affiliated-managers-group-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/affiliated-managers-group-problem-types.yml:
     method: derived
@@ -32,7 +47,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -101,6 +116,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/affiliated-managers-group-lifecycle.yml:
     method: derived
     evidence: declared in the artifact
@@ -153,6 +171,9 @@ artifacts:
   press/2026-05-25-05-2023-annual-report-investor-relations.md:
     method: unknown
     evidence: no authorship recorded
+  privacy/affiliated-managers-group-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/affiliated-managers-group-rate-limits.yml:
     method: unknown
     evidence: no authorship recorded
@@ -185,6 +206,9 @@ artifacts:
     evidence: declared in the artifact
   sla/affiliated-managers-group-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/affiliated-managers-group-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   vocabulary/affiliated-managers-group-vocabulary.yaml:
     method: unknown
