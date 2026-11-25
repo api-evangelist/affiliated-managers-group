@@ -95,6 +95,12 @@ The provider's domain terms, defined.
 
 - [Affiliated Managers Group Vocabulary](https://apis.io/vocabularies/affiliated-managers-group/affiliated-managers-group-vocabulary/)
 
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Affiliated Managers Group API Rules](https://apis.io/rules/affiliated-managers-group/affiliated-managers-group-rules/)
+
 #### Security (2)
 
 Authentication, trust centre, and vulnerability disclosure.
@@ -131,18 +137,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 27.4** — thin · rubric 0.24.0 · scored 2026-10-17
+**Kin Score 28.6** — thin · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 60.7 |
 | Contract quality | 1.7 |
-| Contract governance | 13.6 |
+| Contract governance | 27.3 |
 | Operational transparency | 0.0 |
 | Developer ergonomics | 37.5 |
-| Access clarity | 55.3 |
+| Access clarity | 57.4 |
 
-**Agent readiness 8.4** — agent-aware
+**Agent readiness 8.2** — agent-aware
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -165,8 +171,14 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Protected Resource Metadata | — |
 | Dynamic Client Registration | — |
 | Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
-**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+**Regulatory alignment 18.6** — Horizontal (data, software, accessibility, platform)
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/affiliated-managers-group/](https://apis.io/providers/affiliated-managers-group/).
 
